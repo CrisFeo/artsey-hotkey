@@ -56,6 +56,7 @@ static class Hook {
   // Internal vars
   ///////////////////////
 
+  static HookFunc callback = OnHook;
   static Func<bool, Key, bool>? handler;
   static IntPtr hookPtr = IntPtr.Zero;
 
@@ -66,7 +67,7 @@ static class Hook {
     Hook.handler = handler;
     hookPtr = SetWindowsHookEx(
       HOOK_TYPE_KEYBOARD_LOW_LEVEL,
-      OnHook,
+      Hook.callback,
       Marshal.GetHINSTANCE(Assembly.GetExecutingAssembly().GetModules()[0]),
       0
     );
